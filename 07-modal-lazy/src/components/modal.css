@@ -1,0 +1,26 @@
+.modalContainer {
+  background-color: rgba(0, 0, 0, 0.3);
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modalView {
+  background-color: white;
+  border-radius: 10px;
+  overflow: hidden;
+  width: 90%;
+  height: 90vh;
+  box-sizing: border-box;
+}
+
+.modalHeader {
+  background-color: red;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+}
