@@ -1,0 +1,4 @@
+.blockViewContainer {
+  display: flex;
+  flex-direction: column;
+}
