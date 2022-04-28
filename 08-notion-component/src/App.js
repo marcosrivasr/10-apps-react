@@ -1,10 +1,10 @@
 import logo from "./logo.svg";
 import BlockView from "./components/blockView";
-import "./App.css";
+import "./components/blockView.css";
 
 function App() {
   return (
-    <div>
+    <div className="mainContainer">
       <BlockView />
       <BlockView />
     </div>
