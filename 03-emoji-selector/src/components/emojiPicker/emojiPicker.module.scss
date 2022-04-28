@@ -1,8 +1,14 @@
+.inputContainer {
+  display: inline-flex;
+  position: relative;
+}
+
 .emojiPickerContainer {
   position: absolute;
   width: 400px;
   height: 350px;
   border: solid 1px white;
+  background-color: #222;
   display: flex;
   flex-direction: column;
   padding: 15px;

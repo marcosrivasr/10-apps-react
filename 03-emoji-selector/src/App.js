@@ -1,21 +1,11 @@
-import EmojiPicker from "./components/emojiPicker/emojiPicker";
 import "./App.css";
-import { useRef } from "react";
+
+import EmojiPickerInput from "./components/emojiPicker/emojiPickerInput";
 
 function App() {
-  const inputRef = useRef(null);
-
   return (
     <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-
-        <input ref={inputRef} />
-
-        <EmojiPicker ref={inputRef} />
-      </header>
+      <EmojiPickerInput />
     </div>
   );
 }
