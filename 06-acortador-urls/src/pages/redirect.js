@@ -1,26 +1,32 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import Loader from "../components/loader";
 import useReducerApp from "../store/store";
 
 export default function Redirect() {
   const [state, dispatch] = useReducerApp();
+  const [item, setItem] = useState(null);
   const params = useParams();
 
   useEffect(() => {
-    dispatch({ type: "LOAD" });
+    const data = localStorage.getItem("urls") ?? "[]";
+    const items = JSON.parse(data);
     const id = params.id;
-    setTimeout(() => {
-      console.log("asdasd");
-      const item = state.find((item) => item.shortUrl === id);
-      if (item) {
-        console.log(item);
-        dispatch({ type: "ADD_VIEW", data: id });
+    const item = items.find((item) => item.shortUrl === id);
+
+    if (item) {
+      dispatch({ type: "LOAD" });
+      dispatch({ type: "ADD_VIEW", data: id });
+      setItem(item);
+      setTimeout(() => {
         window.location.href = item.url;
-      }
-    }, 1000);
+      }, 3000);
+    } else {
+      setItem(undefined);
+    }
   }, []);
 
   useEffect(() => {}, [state]);
 
-  return <div>Redirect {params.id}</div>;
+  return <Loader item={item} url={params.id} />;
 }

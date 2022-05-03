@@ -4,6 +4,8 @@ import TableBlockView from "./blockComponents/tableBlock/tableBlockView";
 import ToDoBlockView from "./blockComponents/todoBlock/toDoBlockView";
 import { useId, useRef, useState } from "react";
 
+import Button from "./button";
+
 import "./blockView.css";
 
 export default function BlockView() {
@@ -96,8 +98,10 @@ export default function BlockView() {
     const [visible, setVisible] = useState(false);
 
     return (
-      <div style={{ position: "relative" }}>
-        <button onClick={() => setVisible(!visible)}>...</button>
+      <div style={{ position: "relative", marginTop: "20px" }}>
+        <Button inverted menu onClick={() => setVisible(!visible)}>
+          ...
+        </Button>
         <div
           className="typesSelectorButtons"
           style={{ display: visible ? "flex" : "none" }}

@@ -9,33 +9,35 @@ export function add(state, action) {
   try {
     const url = new URL(action.data);
     if (exists(state, url.toString())) {
+      console.log("URL exists");
       throw new Error("URl already exists");
     }
     const shortUrl = getrandom();
-    const temp = [...state];
+    const temp = [...state.items];
     temp.push({ url: url.toString(), shortUrl, views: 0 });
-
+    console.log(temp);
     localStorage.setItem("urls", JSON.stringify(temp));
-    return [...temp];
+    return { items: [...temp] };
   } catch (e) {
-    return [...state];
+    console.log("Not an URL", e);
+    return state;
   }
 }
 
 export function load(state, action) {
   const data = localStorage.getItem("urls") ?? "[]";
   const temp = JSON.parse(data);
-  console.log(temp);
-  return [...temp];
+  return { items: [...temp] };
 }
 
 export function addView(state, action) {
-  const item = state.find((item) => item.shortUrl === action.data);
+  const temp = [...state.items];
+  const item = temp.find((item) => item.shortUrl === action.data);
   item.views++;
-  localStorage.setItem("urls", JSON.stringify(state));
-  return [...state];
+  localStorage.setItem("urls", JSON.stringify(temp));
+  return { items: [...temp] };
 }
 
 export function exists(state, url) {
-  return !!state.find((item) => item.url === url);
+  return !!state.items.find((item) => item.url === url);
 }

@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 
+import Input from "../../input";
+
 export default function Cell({ text, onChange, isLast, onNew, edit }) {
   const [editable, setEditable] = useState(false);
   const [value, setValue] = useState(text);
@@ -41,13 +43,14 @@ export default function Cell({ text, onChange, isLast, onNew, edit }) {
 
   return editable && edit ? (
     <td>
-      <input
+      <Input
+        background
         tabIndex={0}
         onChange={handleOnChange}
         onKeyPress={handleOnKeyDown}
         value={value}
         onBlur={handleOnBlur}
-      />
+      ></Input>
     </td>
   ) : (
     <td onDoubleClick={handleDoubleClick}>{value}</td>

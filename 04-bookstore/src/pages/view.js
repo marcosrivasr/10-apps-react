@@ -16,6 +16,7 @@ export default function View() {
   return (
     <Layout>
       <h2>{item?.title}</h2>
+      <div>{item?.cover ? <img src={item.cover} width="400" /> : ""}</div>
       <div>{item?.author}</div>
       <div>{item?.intro}</div>
       <div>{item?.completed ? "Completado" : "No terminado"}</div>

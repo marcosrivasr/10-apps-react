@@ -12,24 +12,7 @@ code {
     monospace;
 }
 
-.container {
-  width: 800px;
-  margin: 0 auto;
-  text-align: left;
-}
-
 a {
   color: white;
   text-decoration: none;
-}
-
-label {
-  margin-top: 20px;
-  display: block;
-}
-
-input[type="text"] {
-  padding: 10px;
-  font-size: 20px;
-  box-sizing: border-box;
 }

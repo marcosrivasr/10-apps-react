@@ -1,5 +1,7 @@
 import { forwardRef, ref } from "react";
 
+import Input from "../../input";
+
 function TextBlock({ item, onChange, onKeyPress, focus }, ref) {
   function handleChange(e) {
     onChange(item, e);
@@ -9,12 +11,13 @@ function TextBlock({ item, onChange, onKeyPress, focus }, ref) {
     onKeyPress(item, e);
   }
   return (
-    <input
+    <Input
+      border
       ref={focus ? ref : null}
       onChange={handleChange}
       onKeyPress={handleOnKeyPress}
       value={item.text}
-    />
+    ></Input>
   );
 }
 

@@ -1,8 +1,6 @@
 import { useReducer } from "react";
 import { add, load, addView } from "./actions";
 
-export const initialState = [];
-
 export function reducer(state, action) {
   switch (action.type) {
     case "ADD":
@@ -15,5 +13,5 @@ export function reducer(state, action) {
 }
 
 export default function useReducerApp() {
-  return useReducer(reducer, initialState);
+  return useReducer(reducer, { items: [] });
 }

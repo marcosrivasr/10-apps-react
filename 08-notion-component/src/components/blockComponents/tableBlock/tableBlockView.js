@@ -2,6 +2,9 @@ import { forwardRef, useEffect, useState } from "react";
 import Cell from "./cell";
 import TableBlock from "./tableBlock";
 
+import Button from "../../button";
+import "./table.css";
+
 function TableBlockView(
   { data, columns, onChange, onCreate, focusId, onCreateNewColumn },
   ref
@@ -37,8 +40,8 @@ function TableBlockView(
   }
   return (
     <div>
-      <button onClick={handleNewColumnClick}>Add new column</button>
-      <button onClick={handleNewRowClick}>Add new row</button>
+      <Button onClick={handleNewColumnClick}>Add new column</Button>
+      <Button onClick={handleNewRowClick}>Add new row</Button>
       <table>
         <thead>
           <tr>

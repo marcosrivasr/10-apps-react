@@ -1,61 +1,51 @@
 import { useState, useCallback, useMemo } from "react";
+import Results from "./results";
+
+import styled from "styled-components";
+
+const SearchBarContainer = styled.div`
+  position: relative;
+  width: 400px;
+  margin: 0 auto;
+`;
+
+const StyledInput = styled.input`
+  padding: 10px;
+  border-radius: 5px;
+  min-width: 400px;
+  box-sizing: border-box;
+  border: solid 1px #222;
+  outline: none;
+`;
+
 export default function SearchBar({ items, onItemSelected }) {
   const [query, setQuery] = useState("mi");
-
-  function getPositions(item, query) {
-    const index = item.title.toLowerCase().indexOf(query);
-    const left = item.title.slice(0, index);
-    const center = item.title.slice(index, index + query.length);
-    const right = item.title.slice(index + query.length);
-
-    return {
-      left,
-      center,
-      right,
-    };
-  }
-
-  function Results({ onItemSelected }) {
-    const r = items.filter((q) => {
-      return (
-        q.title.toLowerCase().indexOf(query) >= 0 &&
-        query.length > 0 &&
-        query !== ""
-      );
-    });
-
-    return (
-      <div>
-        {r.map((res) => (
-          <MarkedItem key={res.id} item={res} onClick={onItemSelected} />
-        ))}
-      </div>
-    );
-  }
-
-  function MarkedItem({ item, onClick }) {
-    const { left, center, right } = getPositions(item, query);
-
-    function handleClick(e) {
-      onClick(item);
-    }
-    return (
-      <div onClick={handleClick}>
-        {left}
-        <span style={{ fontWeight: "bolder" }}>{center}</span>
-        {right}
-      </div>
-    );
-  }
+  const [results, setResults] = useState([]);
 
   function handleOnChange(e) {
     const value = e.target.value;
     setQuery(value);
   }
+
+  function handleResults(items) {
+    setResults(items);
+  }
+
   return (
-    <div>
-      <input type={"text"} onChange={handleOnChange} value={query} />
-      <Results onItemSelected={onItemSelected} />
-    </div>
+    <SearchBarContainer>
+      {results && <div>{results.length} results</div>}
+      <StyledInput
+        type={"text"}
+        onChange={handleOnChange}
+        value={query}
+      ></StyledInput>
+
+      <Results
+        items={items}
+        query={query}
+        onItemSelected={onItemSelected}
+        onResultsCalculated={handleResults}
+      />
+    </SearchBarContainer>
   );
 }

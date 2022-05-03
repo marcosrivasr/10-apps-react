@@ -25,7 +25,8 @@
   position: absolute;
   width: 200px;
   flex-direction: column;
-  left: -200px;
+  left: -217px;
+  top: 27px;
   z-index: 100;
   border: solid 1px #ccc;
 }

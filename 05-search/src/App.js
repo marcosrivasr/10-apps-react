@@ -3,6 +3,27 @@ import "./App.css";
 import { useState } from "react";
 import SearchBar from "./components/searchbar";
 
+import styled from "styled-components";
+
+const StyledButton = styled.button`
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  background-color: white;
+  border: solid 2px #ccc;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #efefef;
+  }
+
+  .activated{
+    background-color: #00366
+    color: white;
+    border: solid 2px #26aeff;
+  }
+`;
+
 const emails = [
   {
     id: "email-01",
@@ -76,6 +97,7 @@ function App() {
   const [data, setData] = useState([...people, ...emails, ...calendar]);
 
   const [selection, setSelection] = useState(null);
+  const [currentOption, setCurrentOption] = useState("all");
 
   function handleClick(e) {
     const location = e.target.name;
@@ -83,18 +105,22 @@ function App() {
     switch (location) {
       case "all":
         setData([...people, ...emails, ...calendar]);
+        setCurrentOption("all");
         break;
 
       case "people":
         setData([...people]);
+        setCurrentOption("people");
         break;
 
       case "emails":
         setData([...emails]);
+        setCurrentOption("emails");
         break;
 
       case "calendar":
         setData([...calendar]);
+        setCurrentOption("calendar");
         break;
     }
   }
@@ -105,21 +131,20 @@ function App() {
 
   return (
     <div className="App">
-      <button name="all" onClick={handleClick}>
+      <StyledButton name="all" onClick={handleClick}>
         Search in All
-      </button>
-      <button name="emails" onClick={handleClick}>
+      </StyledButton>
+      <StyledButton name="emails" onClick={handleClick}>
         Search in Emails
-      </button>
-      <button name="calendar" onClick={handleClick}>
+      </StyledButton>
+      <StyledButton name="calendar" onClick={handleClick}>
         Search in Calendar
-      </button>
-      <button name="people" onClick={handleClick}>
+      </StyledButton>
+      <StyledButton name="people" onClick={handleClick}>
         Search in People
-      </button>
-      <SearchBar items={data} onItemSelected={handleOnItemSelected} />
-
+      </StyledButton>
       {selection ? <div>You selected: {selection.title}</div> : ""}
+      <SearchBar items={data} onItemSelected={handleOnItemSelected} />
     </div>
   );
 }

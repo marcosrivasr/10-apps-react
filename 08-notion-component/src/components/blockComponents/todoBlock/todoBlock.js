@@ -1,4 +1,5 @@
 import { forwardRef } from "react";
+import Input from "../../input";
 
 function ToDoBlock({ item, onChange, onKeyPress, focus }, ref) {
   function handleChange(e) {
@@ -16,12 +17,12 @@ function ToDoBlock({ item, onChange, onKeyPress, focus }, ref) {
         onChange={handleChange}
         checked={item.completed}
       />
-      <input
+      <Input
         ref={focus ? ref : null}
         onChange={handleChange}
         onKeyPress={handleOnKeyPress}
         value={item.text}
-      />
+      ></Input>
     </div>
   );
 }

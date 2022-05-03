@@ -1,7 +1,10 @@
+import openModal from "./components/openModal";
 import "./App.css";
 
 function App() {
-  function handleClick() {}
+  function handleClick() {
+    openModal("./modal");
+  }
   return (
     <div className="App">
       <header className="App-header">
