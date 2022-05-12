@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import TiktokVideo from "./tiktokVideo";
 import UseFetch from "./useFetch";
 import UseItems from "./useItems";
@@ -21,7 +21,6 @@ export default function Tiktok() {
   }, [count]);
 
   function nextVideo() {
-    requestAnimationFrame(() => {});
     if (index + 2 === items.length) {
       setCount(count + 1);
     } else {
@@ -51,11 +50,20 @@ export default function Tiktok() {
           className="tiktoksContainer"
           style={{ transform: `translateY(${-1 * index * 960 + "px"})` }}
         >
-          {items?.slice(0, index + 5).map((item) => (
-            <TiktokVideo key={crypto.randomUUID()} item={item} />
-          ))}
+          <Videos items={items} />
         </div>
       </div>
     </div>
   );
 }
+
+const Videos = React.memo(({ items }) => {
+  console.log("hOLA");
+  return (
+    <>
+      {items?.map((item) => (
+        <TiktokVideo key={item.id} item={item} />
+      ))}
+    </>
+  );
+});

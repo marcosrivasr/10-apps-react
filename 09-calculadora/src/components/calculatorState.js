@@ -5,6 +5,7 @@ const AppContext = createContext({
   memory: null,
   operation: null,
   currentValue: 0,
+  isDecimal: false,
   history: [],
   /* Methods */
   addNumber: (value) => {},
@@ -19,6 +20,8 @@ export default function CalculatorState({ children }) {
   const [operation, setOperation] = useState(null);
   const [history, setHistory] = useState([]);
   const [isReset, setIsReset] = useState(true);
+  const [isDecimal, setIsDecimal] = useState(false);
+  const [decimalValue, setDecimalValue] = useState(0);
 
   useEffect(() => {
     window.addEventListener("keydown", handleKeydown);
@@ -36,20 +39,33 @@ export default function CalculatorState({ children }) {
   }, []);
 
   function handleAddNumber(value) {
-    console.log("handleAddNumber");
+    debugger;
     if (isReset) {
-      const old = value.toString();
-      setCurrentValue(parseInt(old));
-      setIsReset(false);
+      if (value === ".") {
+        setIsDecimal(true);
+      } else {
+        const dot = isDecimal ? "." : "";
+        const old = currentValue.toString() + dot + value.toString();
+
+        setCurrentValue(parseFloat(old));
+        setIsReset(false);
+        setIsDecimal(false);
+      }
     } else {
-      const old = currentValue.toString() + value.toString();
-      setCurrentValue(parseInt(old));
+      if (value === ".") {
+        setIsDecimal(true);
+      } else {
+        const dot = isDecimal ? "." : "";
+        const old = currentValue.toString() + dot + value.toString();
+        setIsDecimal(false);
+        setCurrentValue(parseFloat(old));
+      }
     }
   }
 
   function handleDelKey() {
     console.log("handleDelKey");
-    let value = currentValue.toString();
+    setCurrentValue(parseInt(currentValue / 10));
   }
 
   function handleAddOperation(op) {
@@ -57,12 +73,24 @@ export default function CalculatorState({ children }) {
       if (operation) {
         //TODO: SOLVE
         getResult();
+        setIsReset(true);
+        setOperation(op);
+        setIsDecimal(false);
       } else {
         setOperation(op);
         setMemory(currentValue);
         setCurrentValue(0);
         setIsReset(true);
+        setIsDecimal(false);
       }
+    }
+  }
+
+  function addDecimal() {
+    debugger;
+    if (currentValue.toString().indexOf(".") > 0) {
+    } else {
+      handleAddNumber(".");
     }
   }
 
@@ -77,6 +105,13 @@ export default function CalculatorState({ children }) {
       case "+/-":
         changeSign();
         break;
+      case "<=":
+        handleDelKey();
+        break;
+      case ".":
+        addDecimal();
+        break;
+      default:
     }
   }
 
@@ -103,6 +138,7 @@ export default function CalculatorState({ children }) {
       setOperation(null);
       setMemory(result);
       setIsReset(true);
+      setIsDecimal(false);
     }
   }
 
@@ -110,6 +146,7 @@ export default function CalculatorState({ children }) {
     setCurrentValue(0);
     setOperation(null);
     setMemory(0);
+    setIsDecimal(false);
   }
 
   function changeSign() {
@@ -124,6 +161,7 @@ export default function CalculatorState({ children }) {
         operation,
         currentValue,
         history: [],
+        isDecimal,
         addNumber: handleAddNumber,
         addOperation: handleAddOperation,
         executeAction: handleAction,
