@@ -5,7 +5,6 @@ import UseItems from "./useItems";
 
 import "./tiktok.css";
 
-let keyPressed = false;
 export default function Tiktok() {
   const [count, setCount] = useState(0);
   const [url, setUrl] = useState("");
@@ -40,7 +39,6 @@ export default function Tiktok() {
         {index}
         {index * 5 + 5}
       </div>
-      <button onClick={() => setCount(count + 1)}>More {index}</button>
       <button onClick={() => nextVideo()} disabled={isLoading}>
         Abajo
       </button>
@@ -50,19 +48,19 @@ export default function Tiktok() {
           className="tiktoksContainer"
           style={{ transform: `translateY(${-1 * index * 960 + "px"})` }}
         >
-          <Videos items={items} />
+          <Videos items={items} index={index} />
         </div>
       </div>
     </div>
   );
 }
 
-const Videos = React.memo(({ items }) => {
+const Videos = React.memo(({ items, index }) => {
   console.log("hOLA");
   return (
     <>
-      {items?.map((item) => (
-        <TiktokVideo key={item.id} item={item} />
+      {items?.map((item, i) => (
+        <TiktokVideo key={item.id} item={item} current={index === i} />
       ))}
     </>
   );
